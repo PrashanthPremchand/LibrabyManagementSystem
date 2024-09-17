@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -23,6 +24,9 @@ public class Card {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date issueDate;
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedOn;
     @Temporal(TemporalType.TIMESTAMP)
     private Date validTill;
     // This method will be called after the entity is persisted to set expiryDate

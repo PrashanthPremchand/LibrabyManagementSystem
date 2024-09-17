@@ -21,6 +21,7 @@ public class Author {
     private int id;
     private String name;
     private int age;
+    @Column(unique = true)//only allows unique entries
     private String email;
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     List<Book> books = new ArrayList<>();
