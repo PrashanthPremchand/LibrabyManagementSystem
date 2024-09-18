@@ -2,6 +2,7 @@ package com.example.LibraryManagementSystem.service.impl;
 
 import com.example.LibraryManagementSystem.dto.requestdto.StudentRequestDto;
 import com.example.LibraryManagementSystem.dto.requestdto.UpdateStudentMobilNoRequestDto;
+import com.example.LibraryManagementSystem.dto.responsedto.FindStudentByIdResponseDto;
 import com.example.LibraryManagementSystem.dto.responsedto.UpdateStudentMobilNoResponseDto;
 import com.example.LibraryManagementSystem.entity.Card;
 import com.example.LibraryManagementSystem.entity.Student;
@@ -49,5 +50,23 @@ public class StudentServiceImpl implements StudentService {
         catch (Exception e){
             throw new StudentNotFoundException("Invalid student ID");
         }
+    }
+
+    @Override
+    public FindStudentByIdResponseDto getStudent(int id) throws StudentNotFoundException {
+        Student student;
+        try{
+            student = studentRepository.findById(id).get();
+        }
+        catch (Exception e){
+            throw new StudentNotFoundException("Invalid student ID");
+        }
+
+        //prepare response dto
+        FindStudentByIdResponseDto findStudentByIdResponseDto = new FindStudentByIdResponseDto();
+        findStudentByIdResponseDto.setName(student.getName());
+        findStudentByIdResponseDto.setMobileNo(student.getMobileNo());
+
+        return findStudentByIdResponseDto;
     }
 }

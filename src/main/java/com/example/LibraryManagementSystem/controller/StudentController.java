@@ -2,6 +2,7 @@ package com.example.LibraryManagementSystem.controller;
 
 import com.example.LibraryManagementSystem.dto.requestdto.StudentRequestDto;
 import com.example.LibraryManagementSystem.dto.requestdto.UpdateStudentMobilNoRequestDto;
+import com.example.LibraryManagementSystem.dto.responsedto.FindStudentByIdResponseDto;
 import com.example.LibraryManagementSystem.dto.responsedto.UpdateStudentMobilNoResponseDto;
 import com.example.LibraryManagementSystem.entity.Student;
 import com.example.LibraryManagementSystem.expections.StudentNotFoundException;
@@ -15,12 +16,19 @@ public class StudentController {
 
     @Autowired
     StudentService studentService;
+
     @PostMapping("/add")
     public String addStudent(@RequestBody StudentRequestDto studentRequestDto){
         return studentService.addStudent(studentRequestDto);
     }
+
     @PutMapping("/update_mobile")
     public UpdateStudentMobilNoResponseDto updateMobileNo(@RequestBody UpdateStudentMobilNoRequestDto updateStudentMobilNoRequestDto) throws StudentNotFoundException {
         return studentService.updateMobileNo(updateStudentMobilNoRequestDto);
+    }
+
+    @GetMapping("/get_student")
+    public FindStudentByIdResponseDto getStudent(@RequestParam("id") int id) throws StudentNotFoundException {
+        return studentService.getStudent(id);
     }
 }

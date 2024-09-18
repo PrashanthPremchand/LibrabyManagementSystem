@@ -1,37 +1,36 @@
 package com.example.LibraryManagementSystem.entity;
 
-import com.example.LibraryManagementSystem.enums.Genre;
+import com.example.LibraryManagementSystem.enums.TransactionStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CurrentTimestamp;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 @Entity
-@Table(name = "book")
+@Table(name="transaction")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Book {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String title;
+    private String transactionNumber;
+    @CurrentTimestamp
+    @Temporal(TemporalType.DATE)
+    private Date transactionDate;
+    private boolean isIssue;
     @Enumerated(EnumType.STRING)
-    private Genre genre;
-    private int noOfPages;
-    private int price;
-    private boolean issued = false;
-    @ManyToOne
-    @JoinColumn
-    Author author;
+    private TransactionStatus transactionStatus;
     @ManyToOne
     @JoinColumn
     Card card;
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-    List<Transaction> transactionList = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn
+    Book book;
 }
