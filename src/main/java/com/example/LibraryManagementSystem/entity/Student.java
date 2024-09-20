@@ -22,6 +22,7 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private Department department;
     private String mobileNo;
+    private String email;
     //Bidirectional mapping optional
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
     Card card;

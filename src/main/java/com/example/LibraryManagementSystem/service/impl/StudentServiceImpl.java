@@ -25,6 +25,7 @@ public class StudentServiceImpl implements StudentService {
         student.setAge(studentRequestDto.getAge());
         student.setDepartment(studentRequestDto.getDepartment());
         student.setMobileNo(studentRequestDto.getMobileNo());
+        student.setEmail(studentRequestDto.getEmail());
         //generating a new card
         Card card = new Card();
         card.setCardStatus(CardStatus.ACTIVATED);

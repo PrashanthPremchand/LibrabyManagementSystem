@@ -17,6 +17,8 @@ import com.example.LibraryManagementSystem.repository.TransactionRepository;
 import com.example.LibraryManagementSystem.service.TransactionService;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -29,6 +31,8 @@ public class TransactionServiceImpl implements TransactionService {
     CardRepository cardRepository;
     @Autowired
     TransactionRepository transactionRepository;
+    @Autowired
+    private JavaMailSender emailSender;
 
     @Override
     public IssueBookResponseDto issueBook(IssueBookRequestDto issueBookRequestDto) throws BookNotFoundException, CardNotFoundException, BookIsAleardyIssuedException, CardExpiredException {
@@ -85,6 +89,15 @@ public class TransactionServiceImpl implements TransactionService {
         issueBookResponseDto.setTransactionNumber(transaction.getTransactionNumber());
         issueBookResponseDto.setTransactionStatus(transaction.getTransactionStatus());
         issueBookResponseDto.setBookName(book.getTitle());
+
+        //Email sending
+        String text = "Congratulations your have been issued a book though LMS project" + book.getTitle();
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("noreply@baeldung.com");
+        message.setTo(card.getStudent().getEmail());
+        message.setSubject("Issued book through LMS project");
+        message.setText(text);
+        emailSender.send(message);
 
         return issueBookResponseDto;
     }
