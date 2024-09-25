@@ -23,6 +23,6 @@ public class Author {
     private int age;
     @Column(unique = true)//only allows unique entries
     private String email;
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Book> books = new ArrayList<>();
 }
